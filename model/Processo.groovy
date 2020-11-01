@@ -9,11 +9,13 @@ class Processo{
     boolean scanner
     boolean drivers
 
+    static int count
+
     @Deprecated
     Processo(){}
 
-    Processo(pid, prioridade, offset, qtdBlocos, impressora, scanner, drivers){
-        this.pid = pid
+    Processo(prioridade, offset, qtdBlocos, impressora, scanner, drivers){
+        this.pid = ++count
         this.prioridade = prioridade
         this.offset = offset
         this.qtdBlocos = qtdBlocos
@@ -22,8 +24,17 @@ class Processo{
         this.drivers = drivers
     }
 
-    // @Override
-    // String toString(){
-    //     return pid as String
-    // }
+    void setPid(pid){
+        throw new IllegalArgumentException("Não é possível alterar o PID!")
+    }
+
+    @Override
+    boolean equals(p){
+        return this.pid == p.pid
+    }
+
+    @Override
+    String toString(){
+        return pid as String
+    }
 }

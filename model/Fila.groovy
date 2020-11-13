@@ -1,5 +1,5 @@
 package model
 
-class Fila{
+class Fila {
 
 }

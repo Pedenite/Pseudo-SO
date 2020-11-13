@@ -1,26 +1,33 @@
 package model
 
-class Processo{
+class Processo {
     int pid
+    int tempoInicio
     int prioridade
+    int tempoUsado
     int offset
-    int qtdBlocos
-    boolean impressora
-    boolean scanner
-    boolean drivers
+    int blocks
+    int impressora
+    int scanner
+    int modem
+    int drivers
 
     static int count
 
     @Deprecated
     Processo(){}
 
-    Processo(prioridade, offset, qtdBlocos, impressora, scanner, drivers){
+    @Deprecated
+    Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, drivers){
         this.pid = ++count
+        this.tempoInicio = tempoInicio
         this.prioridade = prioridade
-        this.offset = offset
-        this.qtdBlocos = qtdBlocos
+        this.tempoUsado = tempoUsado
+        // offset -> implementar memoria
+        this.blocks = blocks
         this.impressora = impressora
         this.scanner = scanner
+        this.modem = modem
         this.drivers = drivers
     }
 

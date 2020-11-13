@@ -3,7 +3,7 @@ Trabalho final de Introdução a Sistemas Operacionais UnB 2020/1
 
 Para rodar (pasta src): `groovy tests.groovy arquivo1.txt arquivo2.txt`
 
-Precisa do [Apache Groovy](https://groovy.apache.org/download.html) instalado!
+Precisa do [Apache Groovy](https://groovy.apache.org/download.html) instalado! Projeto desenvolvido na versão 3.0.4 ou superior.
 
 ## Módulos
 * Módulo de Processos – classes e estruturas de dados relativas ao processo. Basicamente, mantém informações específicas do processo.

@@ -28,5 +28,7 @@ class Manager {
         this.processosProntos << processo
     }
 
-    void prepare(fileSystemProperties)
+    void prepare(fileSystemProperties){
+
+    }
 }

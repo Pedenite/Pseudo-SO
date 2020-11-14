@@ -1,30 +1,27 @@
-import model.Processo
+final def erro = "\u001B[31m"
+final def erroF = "\u001B[0m"
 
-def p = new Processo()
+Manager manager = new Manager()
+
+if(args.size() < 2){
+    return println("${erro}Não foram passados argumentos suficientes!${erroF}")
+}
+if(args.size() > 2){
+    return println("${erro}Foram passados mais argumentos que o necessário!${erroF}")
+}
+
 try {
-    p.pid = 11  // vai dar erro
-} catch(Exception e){
-    println e.message
-}
-println p.pid
-
-if(!args.size()){
-    return println("\u001B[31mNão foram passados argumentos!\u001B[0m")
-}
-
-def manager = new Manager() // sistema operacional
-
-for(arg in args){
-    try {
-        def procsInfo = new File(arg).text.replace(" ", "")split("\n")*.split(",")
-        for(pInfo in procsInfo){            
-            manager.dispatch(pInfo)
-        }
-    } catch(FileNotFoundException e){
-        return println("\u001B[31mArquivo não encontrado! -->> $e\u001B[0m")
-    } catch(IllegalArgumentException e){
-        return println("\u001B[31mProcesso inválido -->> ${e.message}\u001B[0m")
+    def procsInfo = new File(args[0]).text.replace(" ", "").split("\n")*.split(",")
+    for(pInfo in procsInfo){            
+        manager.dispatch(pInfo)
     }
+
+    def filesInfo = new File(args[1]).text.replace(" ", "").split("\n")
+
+} catch(FileNotFoundException e){
+    return println("${erro}Arquivo não encontrado! -->> $e${erroF}")
+} catch(IllegalArgumentException e){
+    return println("${erro}Processo inválido -->> ${e.message}${erroF}")
 }
 
-println manager.processos
+println manager.processosProntos

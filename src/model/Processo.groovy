@@ -15,9 +15,11 @@ class Processo {
     static int count
 
     @Deprecated
-    Processo(){}
+    Processo(){
+        this.pid = ++count
+    }
 
-    @Deprecated
+    @Deprecated // usar o dispatcher do Manager
     Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, drivers){
         this.pid = ++count
         this.tempoInicio = tempoInicio
@@ -31,9 +33,9 @@ class Processo {
         this.drivers = drivers
     }
 
-    void setPid(pid){
-        throw new IllegalArgumentException("Não é possível alterar o PID!")
-    }
+    // operacoes ilegais
+    void setPid(pid){throw new IllegalArgumentException("Não é possível alterar o PID!")}
+    void setCount(count){throw new IllegalArgumentException("Operação ilegal!")}
 
     @Override
     boolean equals(p){

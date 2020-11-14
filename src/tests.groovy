@@ -16,7 +16,8 @@ try {
         manager.dispatch(pInfo)
     }
 
-    def filesInfo = new File(args[1]).text.replace(" ", "").split("\n")
+    def filesInfo = new File(args[1]).text.replace(" ", "").split("\n")*.split(",")
+    manager.prepareFS(filesInfo)
 
 } catch(FileNotFoundException e){
     return println("${erro}Arquivo não encontrado! -->> $e${erroF}")

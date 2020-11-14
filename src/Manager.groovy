@@ -7,6 +7,7 @@ class Manager {
     Fila prioridade1
     Fila prioridade2
     Fila prioridade3
+    SistemaArquivos fs
 
     Manager(){
         processosProntos = new Fila()
@@ -28,7 +29,7 @@ class Manager {
         this.processosProntos << processo
     }
 
-    void prepare(fileSystemProperties){
-
+    void prepareFS(fileSystemProperties){
+        
     }
 }

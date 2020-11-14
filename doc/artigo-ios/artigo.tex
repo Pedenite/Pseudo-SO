@@ -1,102 +1,63 @@
-% Sample document for SBGames papers
-% Uses a slightly modified IEEE VGTC template in conference mode
-
-\documentclass{vgtc}                          % final (conference style)
-
-%% These three lines bring in essential packages: ``mathptmx'' for Type 1 
-%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
-%% for proper handling of the times font family.
-
-\usepackage{float}
-\usepackage{mathptmx}
-\usepackage{graphicx}
-\usepackage{times}
+\documentclass[conference]{IEEEtran}
+%\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{setspace} % espacamento entre linhas
-\usepackage{hyperref}
-
-% padrao 1.5 de espacamento entre linhas
-\setstretch{1.0}
-
-%% We encourage the use of mathptmx for consistent usage of times font
-%% throughout the proceedings. However, if you encounter conflicts
-%% with other math-related packages, you may want to disable it.
-
-%% If you are submitting a paper to a conference for review with a double
-%% blind reviewing process, please replace the value ``0'' below with your
-%% OnlineID. Otherwise, you may safely leave it at ``0''.
-\onlineid{0}
-
-%% declare the category of your paper, only shown in review mode
-\vgtccategory{Research}
-
-%% Paper title.
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
 
 \title{IOS}
 
-%% Authors are listed in up to three columns as necessary
-%% with a footnote referring to a single e-mail contact.
-%% Affiliations are placed after the authors, one per line
-%% with superscript numbers used to link them to authors
+\author{\IEEEauthorblockN{Kesley Kenny Vasques Guimarães\IEEEauthorrefmark{1}, Pedro Henrique de Brito Agnes\IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\textit{Universidade de Brasília, Departmento de Ciência da Computação}\\
+Brasília, Brasil \\
+\{\IEEEauthorrefmark{1}180021231, \IEEEauthorrefmark{2}180026305\}@aluno.unb.br}
+}
 
-%% Single author:
-%%\author{Single author name\thanks{e-mail: email@somewhere.com}}
-%%\affiliation{\scriptsize University A}
-
-%% Multiple authors with single affiliation:
-%%\author{First author\thanks{e-mail: email@somewhere.com} %
-%%\and Second author %
-%%\and Third author}
-%%\affiliation{\scriptsize Research institute X}
-
-%% Multiple authors with multiple affiliations:
-\author{Kesley Kenny Vasques Guimarães$^{1}$\thanks{180021231@aluno.unb.br}
-\and Pedro Henrique de Brito Agnes$^{2}$\thanks{180026305@aluno.unb.br}}
-\affiliation{\scriptsize $^{1}$Universidade de Brasília, Departmento de Ciência da Computação, Brasil}
-
-%% Abstract section.
-%% Note how the keywords must be also included in this section!
-\abstract{Aqui fica o resumo
-
-\smallskip
-
-\noindent \textbf{Palavras-chave:} IOS, Apple, Sistema operacional.
-} % end of abstract
-
-%% Copyright space is enabled by default as required by guidelines.
-%% It is disabled by the 'review' option or via the following command:
-% \nocopyrightspace
+\maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{document}
-\begin{large}
+\begin{abstract}
+\lipsum[1]
+\end{abstract}
 
-%% The ``\maketitle'' command must be the first command after the
-%% ``\begin{document}'' command. It prepares and prints the title block.
+\begin{IEEEkeywords}
+IOS, Apple, Sistema operacional
+\end{IEEEkeywords}
 
-%% the only exception to this rule is the \firstsection command
-\firstsection{Introdução}
+\section{Introdução}
+Aqui fica a introdução. \lipsum[10] \lipsum[5]
 
-\maketitle
+\section{Sobre o IOS}
+blablabla...\lipsum
 
-%% do not uncomment this; use the \firstsection above
-%%\section{Introduction} 
+\subsection{Exemplo de subsection...}
 
-Aqui fica a introdução.
-
-\section{Fundamentação Teórica e Técnica}
-
-Placeholder
+The IEEEtran class file is used to format your paper and style the text. All margins, 
+column widths, line spaces, and text fonts are prescribed; please do not 
+alter them. You may note peculiarities. For example, the head margin
+measures proportionately more than is customary. This measurement 
+and others are deliberate, using specifications that anticipate your paper 
+as one part of the entire proceedings, and not as an independent document. 
+Please do not revise any of the current designations.
 
 \section{Conclusões}
 
-Aqui podem ficar as conclusões
+\lipsum[1] \lipsum[2]
 
-\bibliographystyle{abbrv}
-\bibliography{artigo}
-\end{large}
+\begin{thebibliography}{00}
+\bibitem{b1} foo, bar
+\end{thebibliography}
+
 \end{document}

@@ -1,4 +1,4 @@
-package model
+package pso.module
 
 class Memoria {
   int[] espacoTempoReal = new int[64]

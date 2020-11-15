@@ -1,4 +1,4 @@
-package model
+package pso.module
 
 class Processo {
     int pid

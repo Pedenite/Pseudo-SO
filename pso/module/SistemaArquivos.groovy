@@ -1,4 +1,4 @@
-package model
+package pso.module
 
 class SistemaArquivos {
     char[] mapaDisco
@@ -9,14 +9,14 @@ class SistemaArquivos {
     }
 
     @Deprecated
-    void add(name, primeiroBloco, qtdBlocos){
+    String add(name, primeiroBloco, qtdBlocos){
         if(mapaDisco.contains(name)){
-            println "Inicialização Sistema de Arquivos =>\nArquivo ${name} já existe!"
+            println "Arquivo ${name} já existe!"
             return
         }
         for(int i = primeiroBloco; i < qtdBlocos; i++){
             if(mapaDisco[i]){
-                println "Inicialização Sistema de Arquivos =>\nArquivo ${name}: Bloco ocupado!"
+                println "Arquivo ${name}: Bloco ocupado!"
                 return
             }
         }

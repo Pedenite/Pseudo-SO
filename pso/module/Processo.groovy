@@ -26,7 +26,7 @@ class Processo {
         this.tempoInicio = tempoInicio
         this.prioridade = prioridade
         this.tempoUsado = tempoUsado
-        // offset -> implementar memoria
+        this.offset = -1
         this.blocks = blocks
         this.impressora = impressora
         this.scanner = scanner

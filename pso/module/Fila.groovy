@@ -18,6 +18,10 @@ class Fila {
         return this.procs.remove(0)
     }
 
+    boolean isEmpty(){
+        return this.procs.size() == 0
+    }
+
     // Nao sera possivel acessar a propriedade diretamente
     def setProcs(p){throw new IllegalArgumentException("Operação ilegal!")}
     def getProcs(){throw new IllegalArgumentException("Operação ilegal!")}

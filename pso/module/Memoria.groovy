@@ -1,19 +1,32 @@
 package pso.module
 
 class Memoria {
-  int[] espacoTempoReal = new int[64]
-  int[] espacoUsuario = new int[20]
+  def espaco = [
+    "TempoReal":new int[64],
+    "Usuario":new int[960]
+  ]
 
-  int verificarOffsetDisponivel(tamanhoProcesso) {    
+  int verificarOffsetDisponivel(tamanhoProcesso, tempoReal) {
     int espacosDisponiveisConsecutivos = 0
     int indexDisponivel = -1
+    int[] espacoTotal
 
-    for (int i = 0; i < espacoUsuario.length; i++) {
-      if (((i - espacosDisponiveisConsecutivos) + tamanhoProcesso) > espacoUsuario.length) {
+    if(tamanhoProcesso < 1){
+      return -1
+    }
+
+    if(tempoReal){
+      espacoTotal = espaco["TempoReal"]
+    } else {
+      espacoTotal = espaco["Usuario"]
+    }
+
+    for (int i = 0; i < espacoTotal.length; i++) {
+      if (((i - espacosDisponiveisConsecutivos) + tamanhoProcesso) > espacoTotal.length) {
         break
       }
 
-      if (espacoUsuario[i] == 0) {
+      if (espacoTotal[i] == 0) {
         espacosDisponiveisConsecutivos++
       } else {
         espacosDisponiveisConsecutivos = 0
@@ -29,21 +42,33 @@ class Memoria {
     return indexDisponivel
   }
 
-  void alocarProcesso(offset, tamanhoProcesso) {
+  void alocarProcesso(offset, tamanhoProcesso, tempoReal) {
     int limitOffset = tamanhoProcesso + offset
+    int[] espacoTotal
+    if(tempoReal){
+      espacoTotal = espaco["TempoReal"]
+    } else {
+      espacoTotal = espaco["Usuario"]
+    }
 
     while(offset < limitOffset) {
-      espacoUsuario[offset] = 1;
+      espacoTotal[offset] = 1;
 
       ++offset;
     }
   }
 
-  void desalocarProcesso(offset, tamanhoProcesso) {
+  void desalocarProcesso(offset, tamanhoProcesso, tempoReal) {
     int limitOffset = tamanhoProcesso + offset
+    int[] espacoTotal
+    if(tempoReal){
+      espacoTotal = espaco["TempoReal"]
+    } else {
+      espacoTotal = espaco["Usuario"]
+    }
 
     while(offset < limitOffset) {
-      espacoUsuario[offset] = 0;
+      espacoTotal[offset] = 0;
 
       ++offset;
     }
@@ -51,7 +76,6 @@ class Memoria {
 
   @Override
   String toString(){
-    return "Espaço usuário: " + espacoUsuario.join(', ') + "\n\n" 
-      // "Espaço tempo real: " + espacoTempoReal.join;
+    return "\nEspaço tempo real: " + espaco["TempoReal"].join(', ') + "\n\n" + "Espaço usuário: " + espaco["Usuario"].join(', ');
   }
 }

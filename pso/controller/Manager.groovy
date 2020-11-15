@@ -5,20 +5,25 @@ import pso.module.*
 class Manager {
     SistemaArquivos fs
     Escalonador escalonador
+    Memoria memoria
 
-    Manager(){
+    Manager(Processo dispatcher){
+        memoria = new Memoria()
         escalonador = new Escalonador()
-        escalonador.prepara(new Processo(64)) // dispatcher
-        escalonador.escalona()
+        escalonador.prepara(dispatcher)
+        escalonador.escalona(memoria)
     }
 
-    void dispatch(listaAtributos){
+    Processo prepareProcess(listaAtributos){
         if(listaAtributos?.size() < 8){
             throw new IllegalArgumentException("${listaAtributos}")
         }
         listaAtributos = listaAtributos*.toInteger()
 
-        def processo = new Processo(listaAtributos[0], listaAtributos[1], listaAtributos[2], listaAtributos[3], listaAtributos[4], listaAtributos[5], listaAtributos[6], listaAtributos[7])
+        return new Processo(listaAtributos[0], listaAtributos[1], listaAtributos[2], listaAtributos[3], listaAtributos[4], listaAtributos[5], listaAtributos[6], listaAtributos[7])
+    }
+
+    void dispatch(processo){
         
         println "  PID: ${processo.pid}\n  offset: ${processo.offset}\n  blocks: ${processo.blocks}\n  priority: ${processo.prioridade}\n  time: ${processo.tempoUsado}\n  printers: ${processo.impressora != 0}\n  scanners: ${processo.scanner != 0}\n  modems: ${processo.modem != 0}\n  drives: ${processo.drivers != 0}\n"
         escalonador.prepara(processo)

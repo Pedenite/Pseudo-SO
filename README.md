@@ -1,7 +1,7 @@
 # PSEUDO-SO
 Trabalho final de Introdução a Sistemas Operacionais UnB 2020/1
 
-Para rodar (raiz do repositório): `groovy pso/dispatcher.groovy <arquivo1.txt> <arquivo2.txt>`
+Para rodar (raiz do repositório): `groovy pso/dispatcher.groovy <arquivo_processos.txt> <arquivo_arqs.txt>`
 
 ou
 

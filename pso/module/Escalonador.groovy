@@ -21,13 +21,29 @@ class Escalonador {
         processosProntos << processo
     }
 
-    void escalona(){
+    boolean escalona(memoria){
+        if(processosProntos.isEmpty())
+            return
         def processo = processosProntos.pop()
-            if(processo.tempoReal){
-                tempoReal << processo
-            } else {
-                processosUsuario << processo
-            }
-        
+        processo.offset = memoria.verificarOffsetDisponivel(processo.blocks, processo.tempoReal)
+        if(processo.offset < 0){
+            // pode causar starvation! Verificar depois
+            processosProntos.push(processo)
+            return false
+        }
+
+        if(processo.tempoReal){
+            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+            tempoReal << processo
+        } else {
+            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+            processosUsuario << processo
+        }
+        return true
+    }
+
+    @Override
+    String toString(){
+        return this.tempoReal.toString()
     }
 }

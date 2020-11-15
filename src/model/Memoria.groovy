@@ -55,16 +55,3 @@ class Memoria {
       // "Espaço tempo real: " + espacoTempoReal.join;
   }
 }
-
-def mem = new Memoria()
-
-
-mem.alocarProcesso(0, 3)
-mem.alocarProcesso(3, 3)
-mem.alocarProcesso(6, 14)
-
-int teste1 = mem.verificarOffsetDisponivel(21)
-int teste2 = mem.verificarOffsetDisponivel(14)
-int teste3 = mem.verificarOffsetDisponivel(20)
-
-println("${mem} ${teste1}, ${teste2}, ${teste3}")

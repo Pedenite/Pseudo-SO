@@ -2,6 +2,7 @@ final def erro = "\u001B[31m"
 final def erroF = "\u001B[0m"
 
 Manager manager = new Manager()
+def instructions = []
 
 if(args.size() < 2){
     return println("${erro}Não foram passados argumentos suficientes!${erroF}")
@@ -16,13 +17,17 @@ try {
         manager.dispatch(pInfo)
     }
 
-    def filesInfo = new File(args[1]).text.replace(" ", "").split("\n")*.split(",")
-    manager.prepareFS(filesInfo)
+    def filesInfo = new File(args[1]).text.replace(" ", "").split("\n")
+    def instructionsIndex = manager.prepareFS(filesInfo)
+
+    for(int i = instructionsIndex; i < filesInfo.size(); i++){
+        instructions << filesInfo[i]
+    }
 
 } catch(FileNotFoundException e){
-    return println("${erro}Arquivo não encontrado! -->> $e${erroF}")
+    return println("${erro}Arquivo não encontrado! -->> $e${erroF}\nSaindo com status de erro...")
 } catch(IllegalArgumentException e){
-    return println("${erro}Processo inválido -->> ${e.message}${erroF}")
+    println("dispatcher =>\n${erro}Processo inválido -->> ${e.message}${erroF}")
 }
 
-println manager.processosProntos
+println manager.fs

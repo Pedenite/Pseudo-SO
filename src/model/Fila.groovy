@@ -12,9 +12,9 @@ class Fila {
     }
     boolean leftShift(p){return this.push(p)}
 
-    boolean pop(){
+    Processo pop(){
         if(this.procs.size() == 0)
-            return false
+            return null
         return this.procs.remove(0)
     }
 

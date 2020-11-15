@@ -11,17 +11,18 @@ class Processo {
     int scanner
     int modem
     int drivers
+    boolean tempoReal
 
     static int count
 
-    @Deprecated
-    Processo(){
-        this.pid = ++count
+    Processo(blocks){
+        this.pid = count++
+        this.blocks = blocks
+        this.tempoReal = true
     }
 
-    @Deprecated // usar o dispatcher do Manager
     Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, drivers){
-        this.pid = ++count
+        this.pid = count++
         this.tempoInicio = tempoInicio
         this.prioridade = prioridade
         this.tempoUsado = tempoUsado
@@ -31,6 +32,7 @@ class Processo {
         this.scanner = scanner
         this.modem = modem
         this.drivers = drivers
+        this.tempoReal = false
     }
 
     // operacoes ilegais

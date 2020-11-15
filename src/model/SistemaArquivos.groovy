@@ -8,12 +8,29 @@ class SistemaArquivos {
         mapaDisco = new char[totalBlocos]
     }
 
-    boolean create(name){
+    @Deprecated
+    void add(name, primeiroBloco, qtdBlocos){
+        if(mapaDisco.contains(name)){
+            println "Inicialização Sistema de Arquivos =>\nArquivo ${name} já existe!"
+            return
+        }
+        for(int i = primeiroBloco; i < qtdBlocos; i++){
+            if(mapaDisco[i]){
+                println "Inicialização Sistema de Arquivos =>\nArquivo ${name}: Bloco ocupado!"
+                return
+            }
+        }
+        for(int i = primeiroBloco; i < qtdBlocos+primeiroBloco; i++){
+            mapaDisco[i] = name
+        }
+    }
 
+    boolean create(name){
+        this.opNum++
     }
 
     boolean delete(){
-
+        this.opNum++
     }
 
     @Override

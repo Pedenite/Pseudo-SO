@@ -17,33 +17,78 @@ class Escalonador {
         prioridade3 = new Fila()
     }
 
-    void prepara(processo){
-        processosProntos << processo
+    void prepara(processos){
+        for(processo in processos){
+            processosProntos << processo
+        }
     }
 
-    boolean escalona(memoria){
-        if(processosProntos.isEmpty())
-            return
-        def processo = processosProntos.pop()
-        processo.offset = memoria.verificarOffsetDisponivel(processo.blocks, processo.tempoReal)
-        if(processo.offset < 0){
-            // pode causar starvation! Verificar depois
-            processosProntos.push(processo)
+    def verificaDisponibilidade(memoria){
+        def processosExecutando = []
+        for(int i = 0; i < processosProntos.size(); i++){
+            def processo = processosProntos.pop()
+            processo.offset = memoria.verificarOffsetDisponivel(processo.blocks, processo.tempoReal)
+            if(processo.offset < 0){
+                processosProntos << processo
+                continue
+            }
+            
+            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+            boolean sucesso
+            if(processo.tempoReal){
+                sucesso = tempoReal << processo
+            } else {
+                sucesso = processosUsuario << processo
+                processosExecutando << processo.pid
+            }
+
+            if(!sucesso){
+                memoria.desalocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+                processo.offset = -1
+            }
+        }
+        return processosExecutando
+    }
+
+    boolean classificaProcesso(){
+        if(this.processosUsuario.isEmpty()){
             return false
         }
-
-        if(processo.tempoReal){
-            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
-            tempoReal << processo
-        } else {
-            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
-            processosUsuario << processo
+        def processo = processosUsuario.pop()
+        boolean sucesso
+        switch(processo.prioridade) {
+            case 0:
+                sucesso = prioridade1 << processo
+                break
+            case 1:
+                sucesso = prioridade2 << processo
+                break
+            default:
+                sucesso = prioridade3 << processo
         }
+
+        if(!sucesso){
+            if(processo.prioridade > 0){
+                processo.prioridade--
+            } else {
+                return false
+            }
+            this.processosUsuario << processo
+        }
+
         return true
+    }
+
+    boolean FilasVazias(){
+        
+    }
+
+    void executaProcessos(){
+
     }
 
     @Override
     String toString(){
-        return this.tempoReal.toString()
+        return "tempo real:${tempoReal}\nprontos:${processosProntos}\nusuario:${processosUsuario}\nprioridade1:${prioridade1}\nprioridade2:${prioridade2}\nprioridade3:${prioridade3}"
     }
 }

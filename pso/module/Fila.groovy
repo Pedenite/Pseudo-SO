@@ -5,7 +5,7 @@ class Fila {
     final static int max = 1000
 
     boolean push(p){
-        if(!(p instanceof Processo) || this.procs.size() == max){
+        if(!(p instanceof Processo) || this.procs.size() == max || this.procs.contains(p)){
             return false
         }
         this.procs << p
@@ -20,6 +20,10 @@ class Fila {
 
     boolean isEmpty(){
         return this.procs.size() == 0
+    }
+
+    int size(){
+        return this.procs.size()
     }
 
     // Nao sera possivel acessar a propriedade diretamente

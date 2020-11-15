@@ -50,8 +50,23 @@ for(int i = instructionsIndex; i < filesInfo.size(); i++){
 /******** Executando ********/
 def finished = false
 for(int elapsedTime = 0; !finished; elapsedTime++){
-    def processosNow = watchedProcesses.findAll{processo -> processo.tempoInicio == elapsedTime}
-    println(processosNow)
+    def processosNow = watchedProcesses.findAll{ processo -> processo.tempoInicio == elapsedTime }
+    for(proc in processosNow){
+        manager.dispatch(proc)
+    }
+    println("${manager.escalonador}\n")
+    
+    def processosRodando = manager.verificaProcessosProntos()
+    if(!processosRodando.isEmpty()){
+        println("dispatcher =>")
+        for(process in processosRodando){
+            def proc = watchedProcesses.find{ processo -> processo.pid == process }
+            println "  PID: ${proc.pid}\n  offset: ${proc.offset}\n  blocks: ${proc.blocks}\n  priority: ${proc.prioridade}\n  time: ${proc.tempoUsado}\n  printers: ${proc.impressora != 0}\n  scanners: ${proc.scanner != 0}\n  modems: ${proc.modem != 0}\n  drives: ${proc.drivers != 0}\n"
+        }
+    }
+
+    manager.organizaProcessos()
+    manager.atribuiQuantum()
     
     if(elapsedTime == 25){ //temporario
         finished = true
@@ -61,5 +76,5 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
 
 /******** Finalizando ********/
 println("dispatcher =>")
-// remover processo 0 da fila
+// liberar recursos do processo 0
 Logger.success("Exited successfully!")

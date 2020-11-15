@@ -45,6 +45,11 @@ class Processo {
     }
 
     @Override
+    int hashCode(){
+        return this.pid.hashCode()
+    }
+
+    @Override
     String toString(){
         return pid as String
     }

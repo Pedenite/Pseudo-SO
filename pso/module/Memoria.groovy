@@ -3,7 +3,7 @@ package pso.module
 class Memoria {
   def espaco = [
     "TempoReal":new int[64],
-    "Usuario":new int[960]
+    "Usuario":new int[64]
   ]
 
   int verificarOffsetDisponivel(tamanhoProcesso, tempoReal) {

@@ -1,6 +1,6 @@
 package pso.util
 
-class Logger {
+abstract class Logger {
     static final def error = "\u001B[31m"
     static final def warning = "\u001B[33m"
     static final def success = "\u001B[32m"

@@ -11,14 +11,12 @@ class Processo {
     int scanner
     int modem
     int drivers
-    boolean tempoReal
 
     static int count
 
     Processo(blocks){
         this.pid = count++
         this.blocks = blocks
-        this.tempoReal = true
     }
 
     Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, drivers){
@@ -32,7 +30,6 @@ class Processo {
         this.scanner = scanner
         this.modem = modem
         this.drivers = drivers
-        this.tempoReal = false
     }
 
     // operacoes ilegais

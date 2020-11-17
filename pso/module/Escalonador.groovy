@@ -27,15 +27,15 @@ class Escalonador {
         def processosExecutando = []
         for(int i = 0; i < processosProntos.size(); i++){
             def processo = processosProntos.pop()
-            processo.offset = memoria.verificarOffsetDisponivel(processo.blocks, processo.tempoReal)
+            processo.offset = memoria.verificarOffsetDisponivel(processo.blocks, processo.prioridade == 0)
             if(processo.offset < 0){
                 processosProntos << processo
                 continue
             }
             
-            memoria.alocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+            memoria.alocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
             boolean sucesso
-            if(processo.tempoReal){
+            if(processo.prioridade == 0){
                 sucesso = tempoReal << processo
             } else {
                 sucesso = processosUsuario << processo
@@ -43,7 +43,7 @@ class Escalonador {
             }
 
             if(!sucesso){
-                memoria.desalocarProcesso(processo.offset, processo.blocks, processo.tempoReal)
+                memoria.desalocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
                 processo.offset = -1
             }
         }
@@ -57,10 +57,10 @@ class Escalonador {
         def processo = processosUsuario.pop()
         boolean sucesso
         switch(processo.prioridade) {
-            case 0:
+            case 1:
                 sucesso = prioridade1 << processo
                 break
-            case 1:
+            case 2:
                 sucesso = prioridade2 << processo
                 break
             default:
@@ -84,7 +84,7 @@ class Escalonador {
     }
 
     void executaProcessos(){
-
+        
     }
 
     @Override

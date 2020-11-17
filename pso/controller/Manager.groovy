@@ -20,8 +20,8 @@ class Manager {
         }
         
         listaAtributos = listaAtributos*.toInteger()
-        if(listaAtributos[3] > 960){
-            throw new IllegalArgumentException("O sistema não suporta processos que presisem de mais de 960 blocos de memória")
+        if(listaAtributos[3] > 960 || listaAtributos[3] > 64 && listaAtributos[1] == 0){
+            throw new IllegalArgumentException("O sistema não possui blocos de memória suficeientes para o processo ${listaAtributos}")
         }
 
         return new Processo(listaAtributos[0], listaAtributos[1], listaAtributos[2], listaAtributos[3], listaAtributos[4], listaAtributos[5], listaAtributos[6], listaAtributos[7])
@@ -38,7 +38,7 @@ class Manager {
             def name = file[0]
             def bloco = file[1].toInteger()
             def qtdBlocos = file[2].toInteger()
-            fs.add(name, bloco, qtdBlocos)
+            fs.init(name, bloco, qtdBlocos)
         }
         return n+3
     }
@@ -58,7 +58,7 @@ class Manager {
         }
     }
 
-    void AtribuiQuantum(){
+    void atribuiQuantum(){
         
     }
 }

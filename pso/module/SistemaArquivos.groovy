@@ -14,12 +14,19 @@ class SistemaArquivos {
             println "Arquivo ${name} já existe!"
             return
         }
+
+        if(name.size() != 1 || !name.matches("[a-zA-Z]+")){
+            println("Os arquivos devem ter apenas uma letra como nome!")
+            return
+        }
+
         for(int i = primeiroBloco; i < qtdBlocos+primeiroBloco; i++){
             if(mapaDisco[i]){
                 println "Arquivo ${name}: Bloco ocupado!"
                 return
             }
         }
+        
         for(int i = primeiroBloco; i < qtdBlocos+primeiroBloco; i++){
             mapaDisco[i] = new Arquivo(name, 0)
         }
@@ -29,9 +36,15 @@ class SistemaArquivos {
     void create(name, pid, blocosSolicitados){
         this.opNum++
         print("Operação ${opNum} >>> ")
-        if(mapaDisco.contains(name)){
-            println("falha\nNão foi possível criar o arquivo (Já existe um arquivo com o mesmo nome)")
-            return 
+        if(name.size() != 1 || !name.matches("[a-zA-Z]+")){
+            println("falha\nOs arquivos devem ter apenas uma letra como nome!")
+        }
+
+        for(arquivo in mapaDisco){
+            if(arquivo.nome == name){
+                println("falha\nNão foi possível criar o arquivo (Já existe um arquivo com o mesmo nome)")
+                return 
+            }
         }
 
         boolean sucesso = false

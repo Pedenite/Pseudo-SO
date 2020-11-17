@@ -6,12 +6,12 @@ class Manager {
     SistemaArquivos fs
     Escalonador escalonador
     Memoria memoria
+    Processo dispatcher
 
     Manager(Processo dispatcher){
         memoria = new Memoria()
         escalonador = new Escalonador()
-        this.dispatch(dispatcher)
-        this.verificaProcessosProntos()
+        this.dispatcher = dispatcher
     }
 
     Processo prepareProcess(listaAtributos){
@@ -59,6 +59,6 @@ class Manager {
     }
 
     void atribuiQuantum(){
-        
+        escalonador.executaProcessos()
     }
 }

@@ -18,7 +18,7 @@ def procsInfo
 def filesInfo
 def instructionsIndex
 def watchedProcesses = []
-def instructions = []
+def instructionsFS = []
 
 try {
     procsInfo = new File(args[0]).text.replace(" ", "").split("\n")*.split(",")
@@ -44,7 +44,7 @@ try {
 println manager.fs
 
 for(int i = instructionsIndex; i < filesInfo.size(); i++){
-    instructions << filesInfo[i]
+    instructionsFS << filesInfo[i]
 }
 
 /******** Executando ********/
@@ -68,10 +68,15 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     manager.organizaProcessos()
     manager.atribuiQuantum()
     
-    if(elapsedTime == 25){ //temporario
+    if(elapsedTime == 25){ //deve mudar para quando todos os processos terminarem a execucao
         finished = true
     }
     sleep(1000)
+}
+
+/******** Instrucoes do Sistema de Arquivos ********/
+for(instrucao in instructionsFS){
+
 }
 
 /******** Finalizando ********/

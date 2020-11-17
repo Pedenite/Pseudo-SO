@@ -11,6 +11,7 @@ class Processo {
     int scanner
     int modem
     int drivers
+    int instrucaoAtual
 
     static int count
 
@@ -30,6 +31,22 @@ class Processo {
         this.scanner = scanner
         this.modem = modem
         this.drivers = drivers
+    }
+
+    boolean execute(){
+        if(this.instrucaoAtual == 0){
+            println("P${this.pid} Inicializando")
+        }
+
+        this.instrucaoAtual++
+        println("P${this.pid} Executando instrucao ${this.instrucaoAtual}")
+
+        if(this.instrucaoAtual == tempoUsado){
+            println("P${this.pid} Finalizado com sucesso")
+            return true
+        }
+        
+        return false
     }
 
     // operacoes ilegais

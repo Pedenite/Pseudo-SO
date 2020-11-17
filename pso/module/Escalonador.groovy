@@ -7,6 +7,8 @@ class Escalonador {
     Fila prioridade1
     Fila prioridade2
     Fila prioridade3
+    Processo posseCPU
+    int vez
 
     Escalonador(){
         processosProntos = new Fila()
@@ -15,6 +17,7 @@ class Escalonador {
         prioridade1 = new Fila()
         prioridade2 = new Fila()
         prioridade3 = new Fila()
+        vez = 1
     }
 
     void prepara(processos){
@@ -79,12 +82,59 @@ class Escalonador {
         return true
     }
 
-    boolean FilasVazias(){
-        
-    }
-
     void executaProcessos(){
-        
+        if(posseCPU){ // para os processos de tempo real
+            boolean terminou = posseCPU.execute()
+            if(terminou){
+                posseCPU = null
+            }
+            return
+        }
+
+        if(!tempoReal.isEmpty()){
+            posseCPU = tempoReal.pop()
+        } else {
+            switch(vez){
+                case 1:
+                    if(!prioridade1.isEmpty()){
+                        posseCPU = prioridade1.pop()
+                        boolean terminou = posseCPU.execute()
+                        if(!terminou){
+                            prioridade2 << posseCPU
+                        }
+
+                        posseCPU = null
+                        this.vez++
+                        break
+                    }
+                    this.vez++
+                case 2:
+                    if(!prioridade2.isEmpty()){
+                        posseCPU = prioridade2.pop()
+                        boolean terminou = posseCPU.execute()
+                        if(!terminou){
+                            prioridade3 << posseCPU
+                        }
+                        
+                        posseCPU = null
+                        this.vez++
+                        break
+                    }
+                    this.vez++
+                case 3:
+                    if(!prioridade3.isEmpty()){
+                        posseCPU = prioridade3.pop()
+                        boolean terminou = posseCPU.execute()
+                        if(!terminou){
+                            prioridade3 << posseCPU
+                        }
+                        
+                        this.vez = 1
+                        posseCPU = null
+                    }
+                    this.vez = 1
+            }
+        }
     }
 
     @Override

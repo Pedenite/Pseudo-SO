@@ -58,7 +58,11 @@ class Manager {
         }
     }
 
-    void atribuiQuantum(){
-        escalonador.executaProcessos()
+    boolean atribuiQuantum(){
+        def processoFinalizado = escalonador.executaProcessos()
+        if(processoFinalizado){
+            memoria.desalocarProcesso(processoFinalizado.offset, processoFinalizado.blocks, processoFinalizado.prioridade == 0)
+        }
+        return escalonador.filasVazias()
     }
 }

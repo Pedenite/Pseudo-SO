@@ -35,13 +35,15 @@ for(pInfo in procsInfo){
     }
 }
 
+int processosEspera = watchedProcesses.size()
+
 try {
-    println "Inicialização Sistema de Arquivos =>"
+    println "=== Inicialização Sistema de Arquivos ==="
     instructionsIndex = manager.prepareFS(filesInfo)
 } catch(IllegalArgumentException | ArrayIndexOutOfBoundsException e){
     Logger.error("Não foi possível inicializar! -->> $e")
 }
-println manager.fs
+println("${manager.fs}\n")
 
 for(int i = instructionsIndex; i < filesInfo.size(); i++){
     instructionsFS << filesInfo[i]
@@ -53,24 +55,23 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     def processosNow = watchedProcesses.findAll{ processo -> processo.tempoInicio == elapsedTime }
     for(proc in processosNow){
         manager.dispatch(proc)
+        processosEspera--
     }
-    println("${manager.escalonador}\n")
     
     def processosRodando = manager.verificaProcessosProntos()
     if(!processosRodando.isEmpty()){
-        println("dispatcher =>")
+        println("\n===== Dispatcher =====")
         for(process in processosRodando){
             def proc = watchedProcesses.find{ processo -> processo.pid == process }
-            println "  PID: ${proc.pid}\n  offset: ${proc.offset}\n  blocks: ${proc.blocks}\n  priority: ${proc.prioridade}\n  time: ${proc.tempoUsado}\n  printers: ${proc.impressora != 0}\n  scanners: ${proc.scanner != 0}\n  modems: ${proc.modem != 0}\n  drives: ${proc.drivers != 0}\n"
+            println "PID: ${proc.pid}\noffset: ${proc.offset}\nblocks: ${proc.blocks}\npriority: ${proc.prioridade}\ntime: ${proc.tempoUsado}\nprinters: ${proc.impressora != 0}\nscanners: ${proc.scanner != 0}\nmodems: ${proc.modem != 0}\ndrives: ${proc.drivers != 0}\n"
         }
     }
 
     manager.organizaProcessos()
-    manager.atribuiQuantum()
+    finished = manager.atribuiQuantum() && processosEspera == 0
     
-    if(elapsedTime == 25){ //deve mudar para quando todos os processos terminarem a execucao
-        finished = true
-    }
+    // debug(manager)
+    
     sleep(1000)
 }
 
@@ -80,6 +81,10 @@ for(instrucao in instructionsFS){
 }
 
 /******** Finalizando ********/
-println("dispatcher =>")
-// liberar recursos do processo 0
+println("\n===== Dispatcher =====")
 Logger.success("Exited successfully!")
+
+def debug(manager){
+    println("\n${manager.escalonador}\n")
+    println("${manager.memoria}\n")
+}

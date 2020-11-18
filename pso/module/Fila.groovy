@@ -32,6 +32,9 @@ class Fila {
 
     @Override
     String toString(){
-        return this.procs.toString()
+        if(this.isEmpty()){
+            return "-"
+        }
+        return this.procs.join(" | ").reverse() + " >"
     }
 }

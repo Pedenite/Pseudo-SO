@@ -35,14 +35,14 @@ class Processo {
 
     boolean execute(){
         if(this.instrucaoAtual == 0){
-            println("P${this.pid} Inicializando")
+            println("P${this.pid}: Inicializando")
         }
 
         this.instrucaoAtual++
-        println("P${this.pid} Executando instrucao ${this.instrucaoAtual}")
+        println("P${this.pid}: Executando instrucao ${this.instrucaoAtual}")
 
-        if(this.instrucaoAtual == tempoUsado){
-            println("P${this.pid} Finalizado com sucesso")
+        if(this.instrucaoAtual >= tempoUsado){
+            println("P${this.pid}: Finalizado com sucesso")
             return true
         }
         

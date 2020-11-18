@@ -42,10 +42,11 @@ class Escalonador {
                 sucesso = tempoReal << processo
             } else {
                 sucesso = processosUsuario << processo
-                processosExecutando << processo.pid
             }
 
-            if(!sucesso){
+            if(sucesso){
+                processosExecutando << processo.pid
+            } else {
                 memoria.desalocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
                 processo.offset = -1
             }
@@ -82,13 +83,19 @@ class Escalonador {
         return true
     }
 
-    void executaProcessos(){
+    boolean filasVazias(){
+        return processosProntos.isEmpty() && tempoReal.isEmpty() && processosUsuario.isEmpty() && prioridade1.isEmpty() && prioridade2.isEmpty() && prioridade3.isEmpty()
+    }
+
+    Processo executaProcessos(){
+        Processo finalizado = null
         if(posseCPU){ // para os processos de tempo real
             boolean terminou = posseCPU.execute()
             if(terminou){
+                finalizado = posseCPU
                 posseCPU = null
             }
-            return
+            return finalizado
         }
 
         if(!tempoReal.isEmpty()){
@@ -96,49 +103,53 @@ class Escalonador {
         } else {
             switch(vez){
                 case 1:
+                    this.vez++
                     if(!prioridade1.isEmpty()){
                         posseCPU = prioridade1.pop()
                         boolean terminou = posseCPU.execute()
                         if(!terminou){
                             prioridade2 << posseCPU
+                        } else {
+                            finalizado = posseCPU
                         }
 
                         posseCPU = null
-                        this.vez++
                         break
                     }
-                    this.vez++
                 case 2:
+                    this.vez++
                     if(!prioridade2.isEmpty()){
                         posseCPU = prioridade2.pop()
                         boolean terminou = posseCPU.execute()
                         if(!terminou){
                             prioridade3 << posseCPU
+                        } else {
+                            finalizado = posseCPU
                         }
                         
                         posseCPU = null
-                        this.vez++
                         break
                     }
-                    this.vez++
-                case 3:
+                default:
+                    this.vez = 1
                     if(!prioridade3.isEmpty()){
                         posseCPU = prioridade3.pop()
                         boolean terminou = posseCPU.execute()
                         if(!terminou){
                             prioridade3 << posseCPU
+                        } else {
+                            finalizado = posseCPU
                         }
                         
-                        this.vez = 1
                         posseCPU = null
                     }
-                    this.vez = 1
             }
         }
+        return finalizado
     }
 
     @Override
     String toString(){
-        return "tempo real:${tempoReal}\nprontos:${processosProntos}\nusuario:${processosUsuario}\nprioridade1:${prioridade1}\nprioridade2:${prioridade2}\nprioridade3:${prioridade3}"
+        return "===== FILAS =====\nTempo real:\t${tempoReal}\nProntos:\t${processosProntos}\nUsuario:\t${processosUsuario}\nPrioridade 1:\t${prioridade1}\nPrioridade 2:\t${prioridade2}\nPrioridade 3:\t${prioridade3}\n\nPosse da CPU:\t[${posseCPU ? posseCPU : " "}]"
     }
 }

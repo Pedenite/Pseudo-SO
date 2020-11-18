@@ -76,6 +76,6 @@ class Memoria {
 
   @Override
   String toString(){
-    return "\nEspaço tempo real: " + espaco["TempoReal"].join(', ') + "\n\n" + "Espaço usuário: " + espaco["Usuario"].join(', ');
+    return "===== Ocupação da Memória =====\n\nEspaço tempo real: " + espaco["TempoReal"].join(', ') + "\n\n" + "Espaço usuário: " + espaco["Usuario"].join(', ');
   }
 }

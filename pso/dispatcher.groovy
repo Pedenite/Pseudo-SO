@@ -63,7 +63,7 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
         println("\n===== Dispatcher =====")
         for(process in processosRodando){
             def proc = watchedProcesses.find{ processo -> processo.pid == process }
-            println "PID: ${proc.pid}\noffset: ${proc.offset}\nblocks: ${proc.blocks}\npriority: ${proc.prioridade}\ntime: ${proc.tempoUsado}\nprinters: ${proc.impressora != 0}\nscanners: ${proc.scanner != 0}\nmodems: ${proc.modem != 0}\ndrives: ${proc.drivers != 0}\n"
+            println "PID: ${proc.pid}\noffset: ${proc.offset}\nblocks: ${proc.blocks}\npriority: ${proc.prioridade}\ntime: ${proc.tempoUsado}\nprinters: ${proc.impressora != 0}\nscanners: ${proc.scanner != 0}\nmodems: ${proc.modem != 0}\nsata: ${proc.sata != 0}\n"
         }
     }
 

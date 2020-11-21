@@ -7,10 +7,12 @@ class Manager {
     Escalonador escalonador
     Memoria memoria
     Processo dispatcher
+    Recurso recurso
 
     Manager(Processo dispatcher){
         memoria = new Memoria()
         escalonador = new Escalonador()
+        recurso = new Recurso()
         this.dispatcher = dispatcher
     }
 
@@ -48,7 +50,7 @@ class Manager {
     }
 
     def verificaProcessosProntos(){
-        return escalonador.verificaDisponibilidade(this.memoria)
+        return escalonador.verificaDisponibilidade(this.memoria, this.recurso)
     }
 
     void organizaProcessos(){
@@ -62,6 +64,11 @@ class Manager {
         def processoFinalizado = escalonador.executaProcessos()
         if(processoFinalizado){
             memoria.desalocarProcesso(processoFinalizado.offset, processoFinalizado.blocks, processoFinalizado.prioridade == 0)
+            
+            processoFinalizado.impressora > 0 ? recurso.desalocarRecurso("impressora", (processoFinalizado.impressora - 1)) : 0;
+            processoFinalizado.scanner > 0 ? recurso.desalocarRecurso("scanner", (processoFinalizado.scanner - 1)) : 0;
+            processoFinalizado.sata > 0 ? recurso.desalocarRecurso("sata", (processoFinalizado.sata - 1)) : 0;
+            processoFinalizado.modem > 0 ? recurso.desalocarRecurso("modem", (processoFinalizado.modem - 1)) : 0;
         }
         return escalonador.filasVazias()
     }

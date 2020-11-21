@@ -10,7 +10,7 @@ class Processo {
     int impressora
     int scanner
     int modem
-    int drivers
+    int sata
     int instrucaoAtual
 
     static int count
@@ -20,7 +20,7 @@ class Processo {
         this.blocks = blocks
     }
 
-    Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, drivers){
+    Processo(tempoInicio, prioridade, tempoUsado, blocks, impressora, scanner, modem, sata){
         this.pid = count++
         this.tempoInicio = tempoInicio
         this.prioridade = prioridade
@@ -30,7 +30,7 @@ class Processo {
         this.impressora = impressora
         this.scanner = scanner
         this.modem = modem
-        this.drivers = drivers
+        this.sata = sata
     }
 
     boolean execute(){

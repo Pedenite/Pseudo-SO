@@ -8,7 +8,7 @@ class Recurso {
     "sata":new int[2]
   ]
 
-  int alocarRecurso(nomeRecurso) {
+  int alocarRecurso(nomeRecurso, pidProcesso) {
     try {
       int indexAlocado = -1
 
@@ -17,8 +17,12 @@ class Recurso {
       }
 
       for (int i = 0; i < recursos[nomeRecurso].length; ++i) {
+        if (recursos[nomeRecurso][i] == pidProcesso) {
+          break
+        }
+
         if (recursos[nomeRecurso][i] == 0) {
-          recursos[nomeRecurso][i] = 1
+          recursos[nomeRecurso][i] = pidProcesso
           indexAlocado = i
 
           break

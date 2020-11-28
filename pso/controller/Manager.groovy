@@ -66,10 +66,10 @@ class Manager {
             memoria.desalocarProcesso(processoFinalizado.offset, processoFinalizado.blocks, processoFinalizado.prioridade == 0)
             recurso.desalocarTudo(processoFinalizado.pid)
             
-            processoFinalizado.impressora > 0 ? recurso.desalocarRecurso("impressora", (processoFinalizado.impressora - 1)) : 0;
-            processoFinalizado.scanner > 0 ? recurso.desalocarRecurso("scanner", (processoFinalizado.scanner - 1)) : 0;
-            processoFinalizado.sata > 0 ? recurso.desalocarRecurso("sata", (processoFinalizado.sata - 1)) : 0;
-            processoFinalizado.modem > 0 ? recurso.desalocarRecurso("modem", (processoFinalizado.modem - 1)) : 0;
+            // processoFinalizado.impressora > 0 ? recurso.desalocarRecurso("impressora", (processoFinalizado.impressora - 1)) : 0;
+            // processoFinalizado.scanner > 0 ? recurso.desalocarRecurso("scanner", (processoFinalizado.scanner - 1)) : 0;
+            // processoFinalizado.sata > 0 ? recurso.desalocarRecurso("sata", (processoFinalizado.sata - 1)) : 0;
+            // processoFinalizado.modem > 0 ? recurso.desalocarRecurso("modem", (processoFinalizado.modem - 1)) : 0;
         }
         return escalonador.filasVazias()
     }

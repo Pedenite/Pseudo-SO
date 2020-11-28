@@ -35,6 +35,10 @@ class Fila {
         if(this.isEmpty()){
             return "-"
         }
-        return this.procs.join(" | ").reverse() + " >"
+        def lista = []
+        for(int i = procs.size()-1; i >= 0; i--){
+            lista.add(procs[i])
+        }
+        return lista.join(" | ") + " >"
     }
 }

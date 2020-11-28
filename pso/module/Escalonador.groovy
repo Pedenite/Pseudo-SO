@@ -55,6 +55,7 @@ class Escalonador {
             }
 
             if(!recursoAlocado){
+                memoria.desalocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
                 recurso.desalocarTudo(processo.pid)
                 processosProntos << processo
                 continue
@@ -71,6 +72,7 @@ class Escalonador {
                 processosExecutando << processo.pid
             } else {
                 memoria.desalocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
+                recurso.desalocarTudo(processo.pid)
                 processo.offset = -1
             }
         }
@@ -173,6 +175,6 @@ class Escalonador {
 
     @Override
     String toString(){
-        return "===== FILAS =====\nTempo real:\t${tempoReal}\nProntos:\t${processosProntos}\nUsuario:\t${processosUsuario}\nPrioridade 1:\t${prioridade1}\nPrioridade 2:\t${prioridade2}\nPrioridade 3:\t${prioridade3}\n\nPosse da CPU:\t[${posseCPU ? posseCPU : " "}]"
+        return "===== FILAS =====\nTempo real:\t${tempoReal}\nProntos:\t${processosProntos}\nUsuario:\t${processosUsuario}\nPrioridade 1:\t${prioridade1}\nPrioridade 2:\t${prioridade2}\nPrioridade 3:\t${prioridade3}"//\n\nPosse da CPU:\t[${posseCPU ? posseCPU : " "}]"
     }
 }

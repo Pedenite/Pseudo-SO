@@ -4,7 +4,7 @@ import pso.controller.Manager
 import pso.module.Processo
 import pso.util.Logger
 
-final DEBUG_MODE = false
+final DEBUG_MODE = true
 
 if(args.size() < 2){
     Logger.error("Não foram passados argumentos suficientes!")
@@ -73,7 +73,7 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     finished = manager.atribuiQuantum() && processosEspera == 0
     
     DEBUG_MODE ? debug(manager) : null
-    DEBUG_MODE ? System.console().readLine("Enter para continuar...") : sleep(1000)
+    sleep(1000)
 }
 
 /******** Instrucoes do Sistema de Arquivos ********/

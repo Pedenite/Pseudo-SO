@@ -42,7 +42,7 @@ class Manager {
             def qtdBlocos = file[2].toInteger()
             fs.init(name, bloco, qtdBlocos)
         }
-        return n+3
+        return n+2
     }
 
     void dispatch(processos){
@@ -64,6 +64,7 @@ class Manager {
         def processoFinalizado = escalonador.executaProcessos()
         if(processoFinalizado){
             memoria.desalocarProcesso(processoFinalizado.offset, processoFinalizado.blocks, processoFinalizado.prioridade == 0)
+            recurso.desalocarTudo(processoFinalizado.pid)
             
             processoFinalizado.impressora > 0 ? recurso.desalocarRecurso("impressora", (processoFinalizado.impressora - 1)) : 0;
             processoFinalizado.scanner > 0 ? recurso.desalocarRecurso("scanner", (processoFinalizado.scanner - 1)) : 0;
@@ -71,5 +72,17 @@ class Manager {
             processoFinalizado.modem > 0 ? recurso.desalocarRecurso("modem", (processoFinalizado.modem - 1)) : 0;
         }
         return escalonador.filasVazias()
+    }
+
+    void chamaSistemaArquivos(processo, opcode, nome, numeroBlocos){
+        switch(opcode){
+            case 0:
+            case "0": 
+                fs.create(nome, processo.pid, numeroBlocos)
+                break
+            case 1:
+            case "1": 
+                fs.delete(nome, processo.pid, processo.prioridade)
+        }
     }
 }

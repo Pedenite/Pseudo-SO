@@ -57,6 +57,17 @@ class Recurso {
     }
   }
 
+  // desaloca todos os recursos de um processo
+  boolean desalocarTudo(pid){
+    recursos.each { nomeRecurso, recurso ->
+      for(int i = 0; i < recurso.size(); i++){
+        if(recurso[i] == pid){
+          recurso[i] = 0
+        }
+      }
+    }
+  }
+
   @Override
   String toString(){
     return ("Scanner: " + recursos["scanner"].join(', ') + '\n'

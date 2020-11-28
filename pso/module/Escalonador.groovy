@@ -37,6 +37,29 @@ class Escalonador {
             }
             
             memoria.alocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
+            def nomesRecursos = ["impressora", "scanner", "sata", "modem"]
+            boolean recursoAlocado = true
+
+            for (int j = 0; j < nomesRecursos.size(); ++j) {
+                Integer alocarRecurso = processo[nomesRecursos[j]] > 0 ? recurso.alocarRecurso(nomesRecursos[j], processo.pid) : null
+
+                if (alocarRecurso > 0) {
+                    processo[nomesRecursos[j]] = alocarRecurso + 1
+                    recursoAlocado = true
+                }
+
+                if (alocarRecurso == -1) {
+                    recursoAlocado = false
+                    break
+                }
+            }
+
+            if(!recursoAlocado){
+                recurso.desalocarTudo(processo.pid)
+                processosProntos << processo
+                continue
+            }
+            
             boolean sucesso
             if(processo.prioridade == 0){
                 sucesso = tempoReal << processo
@@ -49,22 +72,6 @@ class Escalonador {
             } else {
                 memoria.desalocarProcesso(processo.offset, processo.blocks, processo.prioridade == 0)
                 processo.offset = -1
-            }
-
-            def nomesRecursos = ["impressora", "scanner", "sata", "modem"]
-
-            for (int j = 0; j < nomesRecursos.size(); ++j) {
-                Integer alocarRecurso = processo[nomesRecursos[j]] > 0 ? recurso.alocarRecurso(nomesRecursos[j], processo.pid) : null;
-
-                if (alocarRecurso > 0) {
-                    processo[nomesRecursos[j]] = alocarRecurso + 1
-                }
-
-                if (alocarRecurso == -1) {
-                    processosProntos << processo
-                    println("\n\n\nPID: ${processo.pid} -> ${nomesRecursos[j]} BREAKKKKKK\n\n\n")
-                    break
-                }
             }
         }
         return processosExecutando

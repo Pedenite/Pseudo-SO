@@ -41,7 +41,7 @@ class SistemaArquivos {
         }
 
         for(arquivo in mapaDisco){
-            if(arquivo.nome == name){
+            if(arquivo?.nome == name){
                 println("falha\nNão foi possível criar o arquivo (Já existe um arquivo com o mesmo nome)")
                 return 
             }
@@ -57,10 +57,11 @@ class SistemaArquivos {
 
             blocosDisponiveis++
             if(blocosDisponiveis == blocosSolicitados){
-                for(int j = i; j > blocosDisponiveis; j--){
+                for(int j = i; j > i-blocosDisponiveis; j--){
                     mapaDisco[j] = new Arquivo(name, pid)
                 }
                 sucesso = true
+                break
             }
         }
 
@@ -88,10 +89,11 @@ class SistemaArquivos {
             return
         }
 
-        while(mapaDisco[posicao].nome == name){
+        while(mapaDisco[posicao]?.nome == name){
             mapaDisco[posicao] = null
             posicao++
         }
+        println("sucesso\nProcesso ${pid} deletou o arquivo ${name}")
     }
 
     // Nao sera possivel acessar a propriedade diretamente

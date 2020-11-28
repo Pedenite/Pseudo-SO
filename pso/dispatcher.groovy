@@ -4,6 +4,8 @@ import pso.controller.Manager
 import pso.module.Processo
 import pso.util.Logger
 
+final DEBUG_MODE = false
+
 if(args.size() < 2){
     Logger.error("Não foram passados argumentos suficientes!")
 }
@@ -70,15 +72,51 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     manager.organizaProcessos()
     finished = manager.atribuiQuantum() && processosEspera == 0
     
-    // debug(manager)
-    
-    sleep(1000)
+    DEBUG_MODE ? debug(manager) : null
+    DEBUG_MODE ? System.console().readLine("Enter para continuar...") : sleep(1000)
 }
 
 /******** Instrucoes do Sistema de Arquivos ********/
+println("\n===== Sistema de Arquivos =====")
 for(instrucao in instructionsFS){
+    def info = instrucao.split(",")
+    if(info[1] == "0" && info.size() != 4 || info[1] == "1" && info.size() != 3){
+        Logger.warning("Instrução do sistema de arquivo ${info} inválida")
+        continue
+    }
+    
+    def processo
+    try {
+        processo = watchedProcesses.find { proc -> proc.pid == info[0].toInteger() }
+        if(!processo){
+            if(info[0] == "0"){
+                processo = dispatcher
+            } else {
+                throw new Exception()
+            }
+        }
+    } catch(Exception e){
+        Logger.warning("Processo ${info[0]} inexistente")
+        continue
+    }
 
+    def blocos = 0
+    try{
+        if(info[1] == "0"){
+            blocos = info[3].toInteger()
+            if(blocos < 1){
+                throw new Exception()
+            }
+        }
+    } catch(Exception e){
+        Logger.warning("Quantidade de blocos inválida: ${blocos}")
+        continue
+    }
+    manager.chamaSistemaArquivos(processo, info[1], info[2], blocos)
+    println()
 }
+
+println("${manager.fs}\n")
 
 /******** Finalizando ********/
 println("\n===== Dispatcher =====")
@@ -87,4 +125,5 @@ Logger.success("Exited successfully!")
 def debug(manager){
     println("\n${manager.escalonador}\n")
     println("${manager.memoria}\n")
+    println("${manager.recurso}\n")
 }

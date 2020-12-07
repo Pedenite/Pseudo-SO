@@ -82,7 +82,7 @@ class SistemaArquivos {
 
         boolean processoTempoReal = prioridade == 0
         int posicao = mapaDisco.findIndexOf{ elem -> 
-            elem.nome == name && (processoTempoReal || elem.processoCriador == pid)
+            elem?.nome == name && (processoTempoReal || elem.processoCriador == pid)
         }
         if(posicao < 0){
             println("falha\nArquivo ${name} inexistente ou processo não possui acesso!")

@@ -73,7 +73,7 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     finished = manager.atribuiQuantum() && processosEspera == 0
     
     DEBUG_MODE ? debug(manager) : null
-    sleep(1000)
+    // sleep(1000)
 }
 
 /******** Instrucoes do Sistema de Arquivos ********/
@@ -84,26 +84,43 @@ for(instrucao in instructionsFS){
         Logger.warning("Instrução do sistema de arquivo ${info} inválida")
         continue
     }
+
+    def count = 0
+    String info0, info1, info2, info3
+    for(l in instrucao){
+        if(l != ","){
+            switch(count) {
+                case 0:info0 = l
+                break
+                case 1:info1 = l
+                break
+                case 2:info2 = l
+                break
+                case 3:info3 = l
+            }
+            count++
+        }
+    }
     
     def processo
     try {
-        processo = watchedProcesses.find { proc -> proc.pid == info[0].toInteger() }
+        processo = watchedProcesses.find { proc -> proc.pid == info0.toInteger() }
         if(!processo){
-            if(info[0] == "0"){
+            if(info0 == "0"){
                 processo = dispatcher
             } else {
                 throw new Exception()
             }
         }
     } catch(Exception e){
-        Logger.warning("Processo ${info[0]} inexistente")
+        Logger.warning("Processo ${info0} inexistente")
         continue
     }
 
     def blocos = 0
     try{
-        if(info[1] == "0"){
-            blocos = info[3].toInteger()
+        if(info1 == "0"){
+            blocos = info3.toInteger()
             if(blocos < 1){
                 throw new Exception()
             }
@@ -112,7 +129,7 @@ for(instrucao in instructionsFS){
         Logger.warning("Quantidade de blocos inválida: ${blocos}")
         continue
     }
-    manager.chamaSistemaArquivos(processo, info[1], info[2], blocos)
+    manager.chamaSistemaArquivos(processo, info1, info2, blocos)
     println()
 }
 

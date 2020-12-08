@@ -73,7 +73,7 @@ for(int elapsedTime = 0; !finished; elapsedTime++){
     finished = manager.atribuiQuantum() && processosEspera == 0
     
     DEBUG_MODE ? debug(manager) : null
-    // sleep(1000)
+    sleep(1000)
 }
 
 /******** Instrucoes do Sistema de Arquivos ********/
